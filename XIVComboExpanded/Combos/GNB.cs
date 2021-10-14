@@ -24,7 +24,8 @@ namespace XIVComboExpandedPlugin.Combos
             BowShock = 16159,
             BurstStrike = 16162,
             FatedCircle = 16163,
-            Bloodfest = 16164;
+            Bloodfest = 16164,
+            Hypervelocity = uint.MaxValue;
 
         public static class Buffs
         {
@@ -32,7 +33,8 @@ namespace XIVComboExpandedPlugin.Combos
                 NoMercy = 1831,
                 ReadyToRip = 1842,
                 ReadyToTear = 1843,
-                ReadyToGouge = 1844;
+                ReadyToGouge = 1844,
+                ReadyToBlast = ushort.MaxValue;
         }
 
         public static class Debuffs
@@ -109,6 +111,24 @@ namespace XIVComboExpandedPlugin.Combos
                     2 => GNB.WickedTalon,
                     _ => GNB.GnashingFang,
                 };
+            }
+
+            return actionID;
+        }
+    }
+
+    internal class GunbreakerBurstStrikeContinuation : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.GunbreakerBurstStrikeCont;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == GNB.BurstStrike)
+            {
+                if (HasEffect(GNB.Buffs.ReadyToBlast))
+                {
+                    return GNB.Hypervelocity;
+                }
             }
 
             return actionID;

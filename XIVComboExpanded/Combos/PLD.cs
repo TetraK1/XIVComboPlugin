@@ -19,7 +19,10 @@ namespace XIVComboExpandedPlugin.Combos
             Prominence = 16457,
             HolyCircle = 16458,
             Confiteor = 16459,
-            Atonement = 16460;
+            Atonement = 16460,
+            BladeOfFaith = ushort.MaxValue,
+            BladeOfTruth = ushort.MaxValue,
+            BladeOfValor = ushort.MaxValue;
 
         public static class Buffs
         {
@@ -164,20 +167,21 @@ namespace XIVComboExpandedPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID == PLD.HolySpirit)
+            if (actionID == PLD.HolySpirit || actionID == PLD.HolyCircle)
             {
+                if (lastComboMove == PLD.Confiteor)
+                    return PLD.BladeOfFaith;
+
+                if (lastComboMove == PLD.BladeOfFaith)
+                    return PLD.BladeOfTruth;
+
+                if (lastComboMove == PLD.BladeOfTruth)
+                    return PLD.BladeOfValor;
+
                 if (HasEffect(PLD.Buffs.Requiescat) && level >= PLD.Levels.Confiteor && LocalPlayer?.CurrentMp < 4000)
                     return PLD.Confiteor;
 
-                return PLD.HolySpirit;
-            }
-
-            if (actionID == PLD.HolyCircle)
-            {
-                if (HasEffect(PLD.Buffs.Requiescat) && level >= PLD.Levels.Confiteor && LocalPlayer?.CurrentMp < 4000)
-                    return PLD.Confiteor;
-
-                return PLD.HolyCircle;
+                return actionID;
             }
 
             return actionID;
@@ -192,6 +196,15 @@ namespace XIVComboExpandedPlugin.Combos
         {
             if (actionID == PLD.Requiescat)
             {
+                if (lastComboMove == PLD.Confiteor)
+                    return PLD.BladeOfFaith;
+
+                if (lastComboMove == PLD.BladeOfFaith)
+                    return PLD.BladeOfTruth;
+
+                if (lastComboMove == PLD.BladeOfTruth)
+                    return PLD.BladeOfValor;
+
                 if (HasEffect(PLD.Buffs.Requiescat) && level >= PLD.Levels.Confiteor)
                     return PLD.Confiteor;
 

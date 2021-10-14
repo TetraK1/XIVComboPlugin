@@ -7,7 +7,7 @@ namespace XIVComboExpandedPlugin
     /// </summary>
     public enum CustomComboPreset
     {
-        // Last enum used: 95
+        // Last enum used: 101
         // ====================================================================================
         #region ASTROLOGIAN
 
@@ -164,8 +164,12 @@ namespace XIVComboExpandedPlugin
         GunbreakerGnashingFangCombo = 21,
 
         [OrderedEnum]
-        [CustomComboInfo("Wicked Talon Continuation", "In addition to the Wicked Talon combo chain, put Continuation moves on Wicked Talon when appropriate.", GNB.JobID, GNB.WickedTalon)]
+        [CustomComboInfo("Wicked Talon Continuation", "Replace Wicked Talon with Continuation moves when appropriate.", GNB.JobID, GNB.WickedTalon)]
         GunbreakerGnashingFangCont = 52,
+
+        [OrderedEnum]
+        [CustomComboInfo("Burst Strike Continuation", "Replace Burst Strike with Continuation moves when appropriate.", GNB.JobID, GNB.BurstStrike)]
+        GunbreakerBurstStrikeCont = 96,
 
         [OrderedEnum]
         [SecretCustomCombo]
@@ -303,6 +307,18 @@ namespace XIVComboExpandedPlugin
 
         #endregion
         // ====================================================================================
+        #region REAPER
+
+        [OrderedEnum]
+        [CustomComboInfo("Slice Combo", "Replace Slice with its combo chain.", RPR.JobID, RPR.Slice)]
+        ReaperSliceCombo = 98,
+
+        [OrderedEnum]
+        [CustomComboInfo("Scythe Combo", "Replace Spinning Scythe with its combo chain.", RPR.JobID, RPR.SpinningScythe)]
+        ReaperScytheCombo = 99,
+
+        #endregion
+        // ====================================================================================
         #region RED MAGE
 
         [OrderedEnum]
@@ -336,6 +352,12 @@ namespace XIVComboExpandedPlugin
 
         #endregion
         // ====================================================================================
+        #region SAGE
+
+        // Level sync: 100
+
+        #endregion
+        // ====================================================================================
         #region SAMURAI
 
         [OrderedEnum]
@@ -357,6 +379,10 @@ namespace XIVComboExpandedPlugin
         [OrderedEnum]
         [CustomComboInfo("Oka Combo", "Replace Oka with its combo chain.", SAM.JobID, SAM.Oka)]
         SamuraiOkaCombo = 15,
+
+        [OrderedEnum]
+        [CustomComboInfo("Hyosetsu Combo", "Replace Hyosetsu with its combo chain.", SAM.JobID, SAM.Hyosetsu)]
+        SamuraiHyosetsuCombo = 100,
 
         [OrderedEnum]
         [CustomComboInfo("Seigan to Third Eye", "Replace Seigan with Third Eye when not procced.", SAM.JobID, SAM.Seigan)]

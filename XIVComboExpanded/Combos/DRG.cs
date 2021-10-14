@@ -9,30 +9,36 @@ namespace XIVComboExpandedPlugin.Combos
         public const byte JobID = 22;
 
         public const uint
+            // Single Target
+            TrueThrust = 75,
+            VorpalThrust = 78,
+            Disembowel = 87,
+            FullThrust = 84,
+            ChaosThrust = 88,
+            HeavensThrust = uint.MaxValue,
+            ChaoticSpring = uint.MaxValue,
+            WheelingThrust = 3556,
+            FangAndClaw = 3554,
+            RaidenThrust = 16479,
+            // AoE
+            DoomSpike = 86,
+            SonicThrust = 7397,
+            CoerthanTorment = 16477,
+            // Combined
+            // Jumps
             Jump = 92,
             HighJump = 16478,
             MirageDive = 7399,
-            BloodOfTheDragon = 3553,
+            // Dragon
             Stardiver = 16480,
-            CoerthanTorment = 16477,
-            DoomSpike = 86,
-            SonicThrust = 7397,
-            ChaosThrust = 88,
-            RaidenThrust = 16479,
-            TrueThrust = 75,
-            Disembowel = 87,
-            FangAndClaw = 3554,
-            WheelingThrust = 3556,
-            FullThrust = 84,
-            VorpalThrust = 78;
+            BloodOfTheDragon = 3553;
 
         public static class Buffs
         {
             public const ushort
                 SharperFangAndClaw = 802,
                 EnhancedWheelingThrust = 803,
-                DiveReady = 1243,
-                RaidenThrustReady = 1863;
+                DiveReady = 1243;
         }
 
         public static class Debuffs
@@ -48,6 +54,8 @@ namespace XIVComboExpandedPlugin.Combos
                 Disembowel = 18,
                 FullThrust = 26,
                 ChaosThrust = 50,
+                HeavensThrust = 86,
+                ChaoticSpring = 86,
                 FangAndClaw = 56,
                 WheelingThrust = 58,
                 SonicThrust = 62,
@@ -113,7 +121,8 @@ namespace XIVComboExpandedPlugin.Combos
                         return DRG.CoerthanTorment;
                 }
 
-                return DRG.DoomSpike;
+                // Draconian Fury
+                return OriginalHook(DRG.DoomSpike);
             }
 
             return actionID;
@@ -134,7 +143,11 @@ namespace XIVComboExpandedPlugin.Combos
                         return DRG.Disembowel;
 
                     if (lastComboMove == DRG.Disembowel && level >= DRG.Levels.ChaosThrust)
-                        return DRG.ChaosThrust;
+                    {
+                        return level >= DRG.Levels.ChaoticSpring
+                            ? DRG.ChaoticSpring
+                            : DRG.ChaosThrust;
+                    }
                 }
 
                 if (HasEffect(DRG.Buffs.SharperFangAndClaw) && level >= DRG.Levels.FangAndClaw)
@@ -164,7 +177,11 @@ namespace XIVComboExpandedPlugin.Combos
                         return DRG.VorpalThrust;
 
                     if (lastComboMove == DRG.VorpalThrust && level >= DRG.Levels.FullThrust)
-                        return DRG.FullThrust;
+                    {
+                        return level >= DRG.Levels.HeavensThrust
+                            ? DRG.HeavensThrust
+                            : DRG.FullThrust;
+                    }
                 }
 
                 if (HasEffect(DRG.Buffs.SharperFangAndClaw) && level >= DRG.Levels.FangAndClaw)

@@ -8,22 +8,27 @@ namespace XIVComboExpandedPlugin.Combos
         public const byte JobID = 34;
 
         public const uint
+            // Single target
             Hakaze = 7477,
+            Jinpu = 7478,
+            Shifu = 7479,
             Yukikaze = 7480,
             Gekko = 7481,
-            Jinpu = 7478,
             Kasha = 7482,
-            Shifu = 7479,
-            Mangetsu = 7484,
+            // AoE
             Fuga = 7483,
+            Mangetsu = 7484,
             Oka = 7485,
-            MeikyoShisui = 7499,
-            Seigan = 7501,
-            ThirdEye = 7498,
+            Hyosetsu = uint.MaxValue,
+            // Iaijutsu and Tsubame
             Iaijutsu = 7867,
             TsubameGaeshi = 16483,
             KaeshiHiganbana = 16484,
-            Shoha = 16487;
+            Shoha = 1648,
+            // Misc
+            MeikyoShisui = 7499,
+            Seigan = 7501,
+            ThirdEye = 7498;
 
         public static class Buffs
         {
@@ -51,7 +56,8 @@ namespace XIVComboExpandedPlugin.Combos
                 Oka = 45,
                 Yukikaze = 50,
                 TsubameGaeshi = 76,
-                Shoha = 80;
+                Shoha = 80,
+                Hyosetsu = 86;
         }
     }
 
@@ -164,6 +170,27 @@ namespace XIVComboExpandedPlugin.Combos
 
                 if (comboTime > 0 && lastComboMove == SAM.Fuga && level >= SAM.Levels.Oka)
                     return SAM.Oka;
+
+                return SAM.Fuga;
+            }
+
+            return actionID;
+        }
+    }
+
+    internal class SamuraiHyosetsuCombo : CustomCombo
+    {
+        protected override CustomComboPreset Preset => CustomComboPreset.SamuraiHyosetsuCombo;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID == SAM.Hyosetsu)
+            {
+                if (HasEffect(SAM.Buffs.MeikyoShisui))
+                    return SAM.Hyosetsu;
+
+                if (comboTime > 0 && lastComboMove == SAM.Fuga && level >= SAM.Levels.Hyosetsu)
+                    return SAM.Hyosetsu;
 
                 return SAM.Fuga;
             }
