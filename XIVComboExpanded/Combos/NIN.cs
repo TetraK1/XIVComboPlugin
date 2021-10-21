@@ -59,6 +59,10 @@ namespace XIVComboExpandedPlugin.Combos
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
+            if (!HasEffect(NIN.Buffs.Mudra)) {
+                return actionID;
+            }
+            
             if (actionID == NIN.AeolianEdge || actionID == NIN.ArmorCrush || actionID == NIN.HakkeMujinsatsu)
             {
                 if (OriginalHook(NIN.JinNormal) == OriginalHook(NIN.Jin))
